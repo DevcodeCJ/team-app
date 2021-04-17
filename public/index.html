@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="./styles.css" rel="stylesheet" type="text/css">
+   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+   <title>Team Applet</title>
+</head>
+<body>
+   <h1 class="title">Team Applet - a Team Collaboration REST API</h1>
+   <div id="homepage">
+      <h1>Find a team member in your area!</h1>
+      <div id="members"></div>
+   </div>
+
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <script src="https://unpkg.com/react@15/dist/react.js"></script>
+   <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+
+   <!-- Create React Component -->
+   <script type="text/babel">
+
+      class Members extends React.Component {
+         constructor(props) {
+            super(props);
+            this.state = {members: []};
+            this.handleSubmit = this.handleSubmit.bind(this);
+         }
+         render() {
+            let members = this.state.members;
+            members = members.map((member, index) => {
+               return (
+                  <li key={index}>
+                     <span className={member.available}></span>
+                     <span className="name">{member.name}</span>
+                     <span className="role">{member.role}</span>
+                     <span className="dist">{Math.floor(member.distance / 1000)} km</span>
+                  </li>
+               )
+            })
+            return (
+               <div id="member-container">
+                  <form id="search" onSubmit={this.handleSubmit}>
+                     <label>Enter your longitude:</label>
+                     <input type="text" ref="lng" placeholder="longitude" required />
+                     <label>Enter your latitude:</label>
+                     <input type="text" ref="lat" placeholder="latitude" required />
+                     <input type="submit" value="Find Members" />
+                  </form>
+                  <ul>{members}</ul>
+               </div>
+            );
+         }
+         handleSubmit(e) {
+            e.preventDefault();
+            const lng = this.refs.lng.value;
+            const lat = this.refs.lat.value;
+            const url = `api/members?lng=${lng}&lat=${lat}`;
+
+            fetch(url)
+               .then((response) => {
+                  return response.json()
+                     .then((data) => {
+                        this.setState({
+                           members: data
+                        })
+                     })
+               });
+         }
+
+
+
+
+
+         // render: () => {
+         //    let members = this.state.members;
+         //    members = members.map((member, index) => {
+         //       return (
+         //          <li key={index}>
+         //             <span className={member.obj.available}></span>
+         //             <span className="name">{member.obj.name}</span>
+         //             <span className="role">{member.obj.role}</span>
+         //             <span className="dist">{Math.floor(member.obj.distance / 1000)} km</span>
+         //          </li>
+         //       )
+         //    })
+
+         //    return (
+         //       <div id="member-container">
+         //          <form id="search" onSubmit={this.handleSubmit}>
+         //             <label>Enter your longitude:</label>
+         //             <input type="text" ref="lng" placeholder="longitude" required />
+         //             <label>Enter your latitude:</label>
+         //             <input type="text" ref="lat" placeholder="latitude" required />
+         //             <input type="submit" value="Find Members" />
+         //          </form>
+         //          <ul>{members}</ul>
+         //       </div>
+         //    )
+         // },
+         // handleSubmit: (e) => {
+         //    e.preventDefault();
+         //    const lng = this.refs.lng.value;
+         //    const lat = this.refs.lat.value;
+         //    const url = `api/members?lng=${lng}&lat=${lat}`;
+
+         //    fetch(url)
+         //       .then((response) => {
+         //          return response.json()
+         //             .then((data) => {
+         //                this.setState({
+         //                   members: data
+         //                })
+         //             })
+         //       });
+         // }
+      }
+
+      ReactDOM.render(<Members />, document.getElementById('members'));
+   
+   </script>
+
+</body>
+</html>
