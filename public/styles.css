@@ -1,20 +1,38 @@
+html {
+  font-size: 14px;
+}
 body {
   font-family: Raleway;
   color: #555;
-  background: #ff5252;
-  margin: 10px 30px;
+  background: #f3f3f3;
+  margin: 0;
+}
+#bg {
+  height: 300px;
+  background: url("pexels-karol-d-841228.jpg") no-repeat center;
+  background-size: cover;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+#bg h1 {
+  padding-top: 1.75rem;
 }
 #homepage {
   max-width: 800px;
-  margin: 60px auto;
+  width: 70%;
+  margin: -120px auto;
   padding: 10px 20px;
   background: #fdfdfd;
   border-radius: 4px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
 }
+#homepage h1 {
+  text-align: center;
+}
 input[type="text"] {
   display: block;
   width: 300px;
+  max-width: 92.5%;
   margin: 20px 0;
   padding: 10px;
   border-radius: 4px;
@@ -26,9 +44,11 @@ label {
 .title {
   color: #fff;
   text-align: center;
-  font-size: 48px;
+  margin-top: 0;
+  font-size: 3rem;
 }
-#homepage h1 {
+.sub-title {
+  color: #fff;
   text-align: center;
 }
 form {
@@ -47,22 +67,35 @@ input[type="submit"] {
   cursor: pointer;
   border-radius: 4px;
 }
+input[type="submit"]:hover {
+  background: rgb(214, 75, 50);
+}
 ul {
   margin: 0;
   padding: 0;
 }
 li {
-  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 15px;
   background: #eee;
   list-style-type: none;
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: bold;
   margin: 10px 0;
   border-radius: 4px;
 }
+li .name {
+  color: DarkSlateGray;
+  margin-left: 20px;
+}
+li .role {
+  color: LightSlateGray;
+  margin-left: 20px;
+}
 span {
   display: inline-block;
-  margin: 0 20px;
 }
 span.dist {
   color: green;
@@ -92,4 +125,34 @@ button {
 }
 button.false {
   display: none;
+}
+.member-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  max-width: 180px;
+}
+/*=========== Media Queries ===========*/
+@media screen and (max-width: 768px) {
+  #homepage {
+    max-width: 650px;
+  }
+  li .name,
+  li .role {
+    margin-left: 7.5px;
+  }
+}
+@media screen and (max-width: 480px) {
+  #bg {
+    height: 250px;
+  }
+  #bg h1 {
+    font-size: 2rem;
+  }
+  #homepage h1 {
+    font-size: 1.85rem;
+  }
+  li {
+    font-size: 0.85rem;
+  }
 }
