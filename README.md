@@ -30,4 +30,6 @@ See credits below...
 
 Original project by [The Net Ninja](https://www.youtube.com/channel/UCW5YeuERMmlnqo4oq8vwUpg) on Youtube.
 
+### `Karol D`
+
 Photo by Karol D from [Pexels](https://www.pexels.com/@karoldach)
