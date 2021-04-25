@@ -30,6 +30,7 @@
             super(props);
             this.state = {members: []};
             this.handleSubmit = this.handleSubmit.bind(this);
+            this.handleClick = this.handleClick.bind(this);
          }
          render() {
             let members = this.state.members;
@@ -47,13 +48,14 @@
             })
             return (
                <div id="member-container">
-                  <form id="search" onSubmit={this.handleSubmit}>
+                  <form onSubmit={this.handleSubmit}>
                      <label>Enter your longitude:</label>
-                     <input type="text" ref="lng" placeholder="longitude" required />
+                     <input type="text" ref="lng" placeholder="-180 to 180" required />   
                      <label>Enter your latitude:</label>
-                     <input type="text" ref="lat" placeholder="latitude" required />
+                     <input type="text" ref="lat" placeholder="-90 to 90" required />
                      <input type="submit" value="Find Members" />
-                  </form>
+                     <input type="button" value="Add Member" onClick={this.handleClick} />
+                  </form>      
                   <ul>{members}</ul>
                </div>
             );
@@ -74,53 +76,20 @@
                      })
                });
          }
+         handleClick() {
+            const url = '/api/add-new-member';
 
-
-
-
-
-         // render: () => {
-         //    let members = this.state.members;
-         //    members = members.map((member, index) => {
-         //       return (
-         //          <li key={index}>
-         //             <span className={member.obj.available}></span>
-         //             <span className="name">{member.obj.name}</span>
-         //             <span className="role">{member.obj.role}</span>
-         //             <span className="dist">{Math.floor(member.obj.distance / 1000)} km</span>
-         //          </li>
-         //       )
-         //    })
-
-         //    return (
-         //       <div id="member-container">
-         //          <form id="search" onSubmit={this.handleSubmit}>
-         //             <label>Enter your longitude:</label>
-         //             <input type="text" ref="lng" placeholder="longitude" required />
-         //             <label>Enter your latitude:</label>
-         //             <input type="text" ref="lat" placeholder="latitude" required />
-         //             <input type="submit" value="Find Members" />
-         //          </form>
-         //          <ul>{members}</ul>
-         //       </div>
-         //    )
-         // },
-         // handleSubmit: (e) => {
-         //    e.preventDefault();
-         //    const lng = this.refs.lng.value;
-         //    const lat = this.refs.lat.value;
-         //    const url = `api/members?lng=${lng}&lat=${lat}`;
-
-         //    fetch(url)
-         //       .then((response) => {
-         //          return response.json()
-         //             .then((data) => {
-         //                this.setState({
-         //                   members: data
-         //                })
-         //             })
-         //       });
-         // }
+            fetch(url, {method: "GET"})
+               .then((response) => {
+                  return response.json();
+               })
+               .then((data) => {
+                  window.location.href = data.redirect;
+               })
+               .catch((err) => {
+                  console.log(err);
+               })
+         }
       }
 
       ReactDOM.render(<Members />, document.getElementById('members'));

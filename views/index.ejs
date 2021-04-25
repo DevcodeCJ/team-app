@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./Partials/head.ejs') %>
+
+<body>
+   <div id="bg">
+      <h1 class="title">Team Applet</h1>
+      <p class="sub-title">a Team Collaboration REST API</p>
+   </div>
+   <div id="homepage">
+      <h1>Find a team member in your area!</h1>
+      <div id="members"></div>
+   </div>
+
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <script src="https://unpkg.com/react@15/dist/react.js"></script>
+   <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+
+   <!-- Create React Component -->
+   <script type="text/babel">
+
+      class Members extends React.Component {
+         constructor(props) {
+            super(props);
+            this.state = {members: []};
+            this.handleSubmit = this.handleSubmit.bind(this);
+            this.handleClick = this.handleClick.bind(this);
+         }
+         render() {
+            let members = this.state.members;
+            members = members.map((member, index) => {
+               return (
+                  <li key={index}>
+                     <div class="member-wrapper">
+                        <span className={member.available}></span>
+                        <span className="name">{member.name}</span>
+                        <span className="role">{member.role}</span>
+                     </div>
+                     <span className="dist">{Math.floor(member.distance / 1000)} km</span>
+                  </li>
+               )
+            })
+            return (
+               <div id="member-container">
+                  <form onSubmit={this.handleSubmit}>
+                     <label>Enter your longitude:</label>
+                     <input type="text" ref="lng" placeholder="-180 to 180" required />   
+                     <label>Enter your latitude:</label>
+                     <input type="text" ref="lat" placeholder="-90 to 90" required />
+                     <input type="submit" value="Find Members" />
+                     <input type="button" value="Add Member" onClick={this.handleClick} />
+                  </form>      
+                  <ul>{members}</ul>
+               </div>
+            );
+         }
+         handleSubmit(e) {
+            e.preventDefault();
+            const lng = this.refs.lng.value;
+            const lat = this.refs.lat.value;
+            const url = `api/members?lng=${lng}&lat=${lat}`;
+
+            fetch(url)
+               .then((response) => {
+                  return response.json()
+                     .then((data) => {
+                        this.setState({
+                           members: data
+                        })
+                     })
+               });
+         }
+         handleClick() {
+            const url = '/api/add-new-member';
+
+            fetch(url, {method: "GET"})
+               .then((response) => {
+                  return response.json();
+               })
+               .then((data) => {
+                  window.location.href = data.redirect;
+               })
+               .catch((err) => {
+                  console.log(err);
+               })
+         }
+      }
+
+      ReactDOM.render(<Members />, document.getElementById('members'));
+   
+   </script>
+
+</body>
+</html>
