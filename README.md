@@ -3,7 +3,8 @@
 **Hello!** 👋
 
 A simple REST API built with NodeJS, used to query a MongoDB backend and fetch team members in a certain proximity. It's currently run on localhost, listening on port 4000.
-👉 Now hosted on Heroku. Visit the link [here](http://team-app-deploy.herokuapp.com)
+
+- 👉 Now hosted on Heroku. Visit the link [here](https://team-app-deploy.herokuapp.com/)
 
 ## Building the project
 
@@ -23,10 +24,8 @@ Users can look for team members within a 100km radius of these coordinates (-80,
 
 ## Updates
 
-👉 Now fetches team members within 500km.
-👉 Included feature for adding new members.
-
-See credits below...
+- 👉 Now fetches team members within 500km.
+- 👉 Included feature for adding new members.
 
 **Happy Coding!** 😄
 
